@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>JSON GEN</title>
+  <link rel="stylesheet" href="./main.css" />
+  <meta charset="utf-8">
+  <!-- <meta name='theme-color' content='#333'> -->
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- <meta rel='canonical' href=''> -->
+
+
+</head>
+
+<body>
+
+<pre id='output'></pre>
+
+</body>
+
+<script>
+
+var conf = {
+  weeks: 1,
+  days: 2,
+  //hours: 4,
+  slotLen: 10, // minutes of sim
+  slotsPerHr: function() { return 60/this.slotLen },
+  begin: "09",
+  end: "17",
+  noOfHours: function() { return this.end-this.begin+1 }
+  //begin: "0900",
+  //end: "1000",
+}
+
+//conf.slotRate = 60/conf.slotLen
+
+var jOb = {
+}
+
+function gen() {
+  // CREATE A WEEKS ARRAY
+  jOb.weeks = []
+
+  // WEEKS LOOP
+  for (var i=0; i<conf.weeks; i++) {
+    jOb.weeks[i] = {}
+    jOb.weeks[i].days = [] // PREP FOR DAYS LOOP
+
+    // DAYS LOOP
+    for (var j=0; j<conf.days; j++) {
+      jOb.weeks[i].days[j] = {}
+      jOb.weeks[i].days[j].hours = {} // PREP FOR HOURS LOOP
+
+      var time = conf.begin
+
+      var hour = Number(conf.begin)
+      var hourCount = hour
+
+      // HOURS LOOP
+      for (var k=0; k<conf.noOfHours(); k++) {
+
+        jOb.weeks[i].days[j].hours[hourCount.toString()] = {}
+        hourCount++
+        var slot = 0
+
+        // SLOT LOOP
+        for (var l=0; l<conf.slotsPerHr(); l++) {
+          jOb.weeks[i].days[j].hours[hour.toString()][slot] = 'foo'
+          slot+=10
+        }
+
+      }
+
+    }
+
+
+  } 
+
+  // OUTPUT
+  var jString = JSON.stringify(jOb,null,"\t")
+  // document.getElementById('output').innerHTML = jString
+  console.log(jString)
+
+}
+
+gen()
+
+function timeCount(time) {
+  var timeNo = time + '00' // ADD DIGITS
+  
+  timeNo = Number(timeNo) // NOW BACK TO NUMBER
+
+  // DO INC HERE
+  timeNo+=conf.slotLen
+
+  var timeString = timeNo.toString()
+  // RESET STRING TO 4 DIGITS
+  if (timeString.length < 4) {
+    timeString = '0' + timeString
+  }
+  return timeString
+
+}
+
+
+</script>
+
+<!-- <script src="main.js"></script> -->
+
+</html>
