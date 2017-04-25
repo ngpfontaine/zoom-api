@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
 });
 
 
-router.get('/createUser', function(req, res) {
+router.get('/users', function(req, res) {
   res.render('users', {title: 'User Management'});
 });
 
@@ -79,8 +79,12 @@ router.post('/updateUser', function(req, res) {
   res.redirect('/');
 });
 
+router.get('/meetings', function(req, res) {
+  res.render('meetings', {title: 'Manage Meetings'});
+});
+
 router.get('/createMeeting', function(req, res) {
-  res.render('Meetings', {title: 'Manage Meetings'});
+  res.render('meetings', {title: 'Create Meetings'});
 });
 
 router.post('/createMeeting', function(req, res) {
